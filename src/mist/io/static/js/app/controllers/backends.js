@@ -12,6 +12,7 @@ define('app/controllers/backends', [
         return Ember.ArrayController.extend({
             content: [],
             machineCount: 0,
+            zoneCount: 0,
             imageCount: 0,
             // TODO make this property dynamic according to all backends states
             state: "waiting",
@@ -59,6 +60,14 @@ define('app/controllers/backends', [
                     count = count + item.machines.filterProperty('selected', true).get('length');
                 });
                 this.set('selectedMachineCount', count);
+            },
+
+            getZoneCount: function(){
+                var count = 0;
+                this.content.forEach(function(item){
+                    count = count + item.zones.content.length;
+                });
+                this.set('zoneCount', count);
             },
 
             getImageCount: function() {
@@ -153,6 +162,7 @@ define('app/controllers/backends', [
                     that.getMachineCount();
                     that.getSelectedMachineCount();
                     that.getImageCount();
+                    that.getZoneCount();
                 });
                 
                 $(document).bind('ready', function(){
@@ -164,6 +174,7 @@ define('app/controllers/backends', [
                             that.content.forEach(function(item){
                                 item.machines.addObserver('length', function() {
                                     that.getMachineCount();
+                                    that.getZoneCount();
                                 });
     
                                 item.machines.addObserver('@each.selected', function() {
