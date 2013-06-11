@@ -888,17 +888,6 @@ def list_keys(request):
     return ret
 
 
-@view_config(route_name='zones', request_method='GET', renderer='json')
-def list_zones(request):
-    """List zones.
-
-    List all DNS zones from each supported backend.
-
-    """
-    ret = []
-    return ret
-
-
 @view_config(route_name='keys', request_method='POST', renderer='json')
 def update_keys(request):
     """Either generate a keypair or change the default one.

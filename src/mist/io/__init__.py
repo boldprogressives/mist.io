@@ -64,10 +64,6 @@ def main(global_config, **settings):
     config.add_route('rules', '/rules')
     config.add_route('rule', '/rules/{rule}')
     
-    config.add_route('zones', '/zones')
-    config.add_route('zone', '/zones/{zone}')
-        
-
     config.scan()
 
     app = config.make_wsgi_app()
