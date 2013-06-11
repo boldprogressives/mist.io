@@ -1,7 +1,7 @@
 """Basic configuration and mappings"""
 from libcloud.compute.types import Provider
 from libcloud.compute.types import NodeState
-
+from libcloud.dns.types import RecordType
 
 COMMAND_TIMEOUT = 20
 
@@ -244,3 +244,12 @@ SUPPORTED_PROVIDERS = [
                         'provider' : "%s:%s" % (Provider.RACKSPACE_FIRST_GEN,'uk')
                         },
                        ]
+
+DNS_RECORD_TYPES = {
+    'A': RecordType.A,
+    'AAAA': RecordType.AAAA,
+    'MX': RecordType.MX,
+    'NS': RecordType.NS,
+    'CNAME': RecordType.CNAME,
+    'DNAME': RecordType.DNAME,
+    }

@@ -46,6 +46,10 @@ def main(global_config, **settings):
     config.add_route('machine_shell',
                      '/backends/{backend}/machines/{machine}/shell')
 
+    config.add_route('zones', '/backends/{backend}/zones')
+    config.add_route('zone_records', '/backends/{backend}/zones/{zone}/records')
+    config.add_route('zone_record', '/backends/{backend}/zones/{zone}/records/{record}')
+
     config.add_route('monitoring', '/monitoring')
     config.add_route('update_monitoring',
                      '/backends/{backend}/machines/{machine}/monitoring')
