@@ -11,12 +11,13 @@ define('app/controllers/zones', [
      */
     function(Zone) {
         return Ember.ArrayController.extend({
+	    backend: null,
 
             init: function() {
                 this._super();
 
                 var that = this;
-                $.getJSON('/zones', function(data) {
+                $.getJSON('/backends/' + this.backend.id + '/zones', function(data) {
                     var content = new Array();
                     data.forEach(function(item){
                         content.push(Zone.create(item));

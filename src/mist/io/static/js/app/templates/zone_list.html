@@ -52,8 +52,12 @@
             data-inset="true"
             data-theme="c"
             data-filter-placeholder="Filter...">
-            {{#each Mist.zonesController}}
-                {{view Mist.ZoneListItemView keyBinding="this" class="node"}}
+            {{#each Mist.backendsController}}
+	      {{#each zones}}
+              <li data-icon="false">
+                  <a href="#" title="{{unbound this.id}}">{{this.domain}}</a>
+              </li>
+	      {{/each}}
             {{/each}}
         </ul>
 

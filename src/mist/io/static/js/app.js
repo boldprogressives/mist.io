@@ -47,7 +47,6 @@ define( 'app', [
     'app/controllers/select_images',
     'app/controllers/keys',
     'app/controllers/rules',
-    'app/controllers/zones',    
     'app/views/home',
     'app/views/count',
     'app/views/backend_button',
@@ -93,7 +92,6 @@ define( 'app', [
                 SelectImagesController,
                 KeysController,
                 RulesController,
-                ZonesController,
                 Home,
                 Count,
                 BackendButton,
@@ -237,7 +235,6 @@ define( 'app', [
         App.set('selectImagesController', SelectImagesController.create());
         App.set('keysController', KeysController.create());
         App.set('rulesController', RulesController.create());
-        App.set('zonesController', ZonesController.create());
         App.set('keyAddController', KeyAddController.create());
 
         App.set('authenticated', AUTH || URL_PREFIX == '' ? true : false);
