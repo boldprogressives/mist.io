@@ -80,7 +80,7 @@ define('app/views/zone_list', [
                             log('selecting zone: ' + zone.name);
                             zone.set('selected', true);
                         });
-		    });
+                    });
                 }  
                 Ember.run.next(function(){
                     $("input[type='checkbox']").checkboxradio("refresh");
