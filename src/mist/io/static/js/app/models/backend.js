@@ -26,7 +26,7 @@ define('app/models/backend', [
             waiting: false,
             enabled: null,
             machines: null,
-	    zones: null,
+            zones: null,
             sizes: [],
             images: null,
             locations: [],

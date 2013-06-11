@@ -50,11 +50,11 @@ define('app/views/zone_list', [
                 var zones = new Array();
 
                 Mist.backendsController.forEach(function(backend){
-		    backend.zones.forEach(function(zone){
+                    backend.zones.forEach(function(zone){
                         if(zone.selected){
                             zones.push(zone);
                         }
-		    });
+                    });
                 });
 
                 return zones;
@@ -69,17 +69,17 @@ define('app/views/zone_list', [
     
                 if(selection == 'none'){
                     Mist.backendsController.forEach(function(backend){
-			backend.zones.forEach(function(zone){
+                        backend.zones.forEach(function(zone){
                             log('deselecting zone: ' + zone.name);
                             zone.set('selected', false);
-			});
+                        });
                     });
                 } else if(selection == 'all'){
                     Mist.backendsController.forEach(function(backend){
-			backend.zones.forEach(function(zone){
+                        backend.zones.forEach(function(zone){
                             log('selecting zone: ' + zone.name);
                             zone.set('selected', true);
-			});
+                        });
 		    });
                 }  
                 Ember.run.next(function(){
@@ -100,11 +100,11 @@ define('app/views/zone_list', [
                 var zones = new Array();
     
                 Mist.backendsController.forEach(function(backend){
-		    backend.zones.forEach(function(zone){
-			if (zone.selected == true) {
+                    backend.zones.forEach(function(zone){
+                        if (zone.selected == true) {
                             zones.push(zone);
-			}
-		    });
+                        }
+                    });
                 });
                 if (zones.length != 1) {
                     // only enable action if a single zone is selected

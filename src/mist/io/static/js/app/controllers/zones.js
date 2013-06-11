@@ -11,7 +11,7 @@ define('app/controllers/zones', [
      */
     function(Zone) {
         return Ember.ArrayController.extend({
-	    backend: null,
+            backend: null,
 
             init: function() {
                 this._super();

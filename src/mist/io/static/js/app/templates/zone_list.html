@@ -53,10 +53,10 @@
             data-theme="c"
             data-filter-placeholder="Filter...">
             {{#each Mist.backendsController}}
-	      {{#each zones}}
-              <li data-icon="false">
+              {{#each zones}}
+                <li data-icon="false">
                   <a href="#" title="{{unbound this.id}}">{{this.domain}}</a>
-              </li>
+                </li>
 	      {{/each}}
             {{/each}}
         </ul>
