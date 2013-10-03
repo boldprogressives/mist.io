@@ -25,6 +25,7 @@ from libcloud.common.types import InvalidCredsError
 from mist.io.config import STATES, SUPPORTED_PROVIDERS
 from mist.io.config import EC2_IMAGES, EC2_PROVIDERS, EC2_SECURITYGROUP
 from mist.io.config import LINODE_DATACENTERS
+from mist.io.config import DNS_RECORD_TYPES
 
 from mist.io.helpers import connect
 from mist.io.helpers import generate_backend_id, get_machine_actions
@@ -247,6 +248,86 @@ def delete_backend(request, renderer='json'):
 
     return Response('OK', 200)
 
+@view_config(route_name='zones', request_method='GET', renderer='json')
+def list_zones(request):
+    try:
+        conn = connect(request, dns_driver=True)
+    except RuntimeError as e:
+        log.error(e)
+        return Response('Internal server error: %s' % e, 503)
+    except Exception, e:
+        return Response('Backend not found: %s' % e, 404)
+    zones = conn.list_zones()
+    ret = [{
+            'id': zone.id,
+            'domain': zone.domain,
+            } for zone in zones]
+    return ret
+
+@view_config(route_name='zone_records', request_method='POST', renderer='json')
+def add_zone_record(request):
+    try:
+        conn = connect(request, dns_driver=True)
+    except RuntimeError as e:
+        log.error(e)
+        return Response('Internal server error: %s' % e, 503)
+    except Exception, e:
+        return Response('Backend not found: %s' % e, 404)
+    zone = conn.get_zone(request.matchdict['zone'])
+
+    try:
+        type = DNS_RECORD_TYPES[request.json_body['type']]
+    except KeyError:
+        return Response('Invalid record type', 400)
+
+    name = request.json_body['name']
+    data = request.json_body['data']
+    try:
+        record = zone.create_record(name=name, type=type, data=data,
+                                    extra={}) # libcloud raises AttributeError: NoneType has no attribute 'get' if you leave this optional parameter empty!
+    except Exception as e:
+        return Response('Failed to create DNS record: %s' % e, 500)
+
+    return {'id': record.id,
+            'type': record.type,
+            'data': record.data,
+            'name': record.name,
+            'domain': zone.domain,
+            }
+
+@view_config(route_name='zone_records', request_method='GET', renderer='json')
+def list_zone_records(request):
+    try:
+        conn = connect(request, dns_driver=True)
+    except RuntimeError as e:
+        log.error(e)
+        return Response('Internal server error: %s' % e, 503)
+    except Exception, e:
+        return Response('Backend not found: %s' % e, 404)
+    zone = conn.get_zone(request.matchdict['zone'])
+    records = conn.list_records(zone)
+    ret = [{
+            'id': record.id,
+            'type': record.type,
+            'data': record.data,
+            'name': record.name,
+            'domain': zone.domain,
+            } for record in records]
+    return ret
+
+@view_config(route_name='zone_record', request_method='DELETE', renderer='json')
+def delete_zone_record(request):
+    try:
+        conn = connect(request, dns_driver=True)
+    except RuntimeError as e:
+        log.error(e)
+        return Response('Internal server error: %s' % e, 503)
+    except Exception, e:
+        return Response('Backend not found: %s' % e, 404)
+    record = conn.get_record(request.matchdict['zone'], request.matchdict['record'])
+    conn.delete_record(record)
+
+    return Response('OK', 200)
 
 @view_config(route_name='backend_action', request_method='POST', request_param="action=toggle", renderer='json')
 def toggle_backend(request):

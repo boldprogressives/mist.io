@@ -54,6 +54,10 @@ def main(global_config, **settings):
     config.add_route('probe', '/backends/{backend}/machines/{machine}/probe')
     config.add_route('shell', '/backends/{backend}/machines/{machine}/shell')
 
+    config.add_route('zones', '/backends/{backend}/zones')
+    config.add_route('zone_records', '/backends/{backend}/zones/{zone}/records')
+    config.add_route('zone_record', '/backends/{backend}/zones/{zone}/records/{record}')
+
     config.add_route('monitoring', '/monitoring')
     config.add_route('update_monitoring', '/backends/{backend}/machines/{machine}/monitoring')
 
@@ -67,6 +71,7 @@ def main(global_config, **settings):
     
     config.add_route('rules', '/rules')
     config.add_route('rule', '/rules/{rule}')
+
     config.add_route('check_auth', '/auth')
     config.add_route('account', '/account')
     

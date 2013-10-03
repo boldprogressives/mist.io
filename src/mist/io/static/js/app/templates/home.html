@@ -49,6 +49,16 @@
                 <span class="ui-li-count">{{Mist.keysController.keys.length}}</span>
             {{/linkTo}}
         </li>
+        <li>
+            {{#linkTo zones}}Zones
+                {{#view Mist.CountView
+                    numberBinding="Mist.backendsController.zoneCount"
+                    tagName="span"
+                    class="ui-li-count"}}
+                    {{view.number}}
+                {{/view}}
+            {{/linkTo}}
+        </li>        
     </ul>
 
 </div>

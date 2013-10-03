@@ -1,5 +1,6 @@
 define('app/models/backend', [
     'app/controllers/machines',
+    'app/controllers/zones',
     'app/controllers/images',
     'app/controllers/sizes',
     'app/controllers/locations', 'ember'],
@@ -8,7 +9,7 @@ define('app/models/backend', [
      *
      * @returns Class
      */
-    function(MachinesController, ImagesController,
+    function(MachinesController, ZonesController, ImagesController,
             SizesController, LocationsController) {
         return Ember.Object.extend({
             
@@ -24,6 +25,7 @@ define('app/models/backend', [
             waiting: false,
             enabled: null,
             machines: null,
+            zones: null,
             sizes: [],
             images: null,
             locations: [],
@@ -80,6 +82,7 @@ define('app/models/backend', [
                 this._super();
                 this.images = ImagesController.create({backend: this});
                 this.machines = MachinesController.create({backend: this});
+                this.zones = ZonesController.create({backend: this});
                 this.sizes = SizesController.create({backend: this});
                 this.locations = LocationsController.create({backend: this});
                 var that = this;

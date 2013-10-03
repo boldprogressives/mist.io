@@ -62,6 +62,9 @@
     <script type="text/x-handlebars" data-template-name="key">
         {{view Mist.SingleKeyView}}
     </script>
+    <script type="text/x-handlebars" data-template-name="zones">
+        {{view Mist.ZoneListView}}
+    </script>    
 </body>
 
 </html>

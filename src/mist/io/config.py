@@ -1,7 +1,7 @@
 """Basic configuration and mappings"""
 from libcloud.compute.types import Provider
 from libcloud.compute.types import NodeState
-
+from libcloud.dns.types import RecordType
 
 COMMAND_TIMEOUT = 20
 
@@ -260,3 +260,12 @@ What we gain:
 
 EC2 datacenters are ['us-east-1', 'us-west-2', 'us-west-1', 'eu-west-1', 'ap-southeast-1', 'ap-northeast-1', 'ap-southeast-2','sa-east-1']
 '''
+
+DNS_RECORD_TYPES = {
+    'A': RecordType.A,
+    'AAAA': RecordType.AAAA,
+    'MX': RecordType.MX,
+    'NS': RecordType.NS,
+    'CNAME': RecordType.CNAME,
+    'DNAME': RecordType.DNAME,
+    }

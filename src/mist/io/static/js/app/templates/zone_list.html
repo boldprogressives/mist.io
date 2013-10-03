@@ -1,0 +1,95 @@
+    <div data-role="header">
+        <a href="#"
+            data-icon="home"
+            data-direction="reverse"
+            class="ui-btn-left">Home</a>
+
+        <h1>Zones</h1>
+        {{view Mist.UserMenuView}}
+
+    </div>
+
+    <div data-role="content" id="zones">
+        <a href="#zones"
+            id="mist-create-zone"
+            data-rel="popup"
+            data-transition="slidedown"
+            class="add-button"
+            data-theme="b"
+            data-role="button"
+            data-icon="plus"
+            data-iconpos="right"
+            {{action addKey target="view"}}>Create</a>
+            
+        <div data-role="popup" id="dialog-add-zone" class="mist-dialog" data-overlay-theme="a">
+            <div data-role="header">
+                <h1>Add zone</h1>
+            </div>
+            {{view Mist.AddKeyView data-role="content"}}
+        </div>
+
+        <a href="#"
+            class="select-zones"
+            data-theme="d"
+            data-role="button"
+            data-icon="arrow-d"
+            {{action openKeySelectPopup target="view"}}>Select</a>
+    
+        <div id="select-zones-popup" data-role="popup">
+            <ul id="select-zones-listmenu" data-role="listview">
+                <li data-icon="false">
+                    <a href="#" title="all">All</a>
+                </li>
+                <li data-icon="false">
+                    <a href="#" title="none">None</a>
+                </li>                
+            </ul>
+        </div>
+        
+        <ul id="zones-list"
+            data-role="listview"
+            data-filter="true"
+            data-inset="true"
+            data-theme="c"
+            data-filter-placeholder="Filter...">
+            {{#each Mist.backendsController}}
+              {{#each zones}}
+                <li data-icon="false">
+                  <a href="#" title="{{unbound this.id}}">{{this.domain}}</a>
+                </li>
+	      {{/each}}
+            {{/each}}
+        </ul>
+
+        <div class="bottom-padding"></div>
+    </div>
+    
+    
+    <div data-role="popup" id="dialog-confirm" data-transition="pop" class="mist-dialog">
+        <div data-role="header">
+            <h1 id="dialog-confirm-title">{{Mist.confirmationController.title}}</h1>
+        </div>
+        {{view Mist.ConfirmationDialog data-role="content"}}
+    </div>
+    
+    <div class="zones-footer" data-role="footer" data-theme="a">
+        <div class="actions" data-role="controlgroup" data-type="horizontal">
+            <a href=""
+                {{bindAttr class=":action-links view.disabledDefaultClass"}}
+                id="keys-button-delete"
+                data-role="button"
+                data-icon="delete"
+                data-rel="popup"
+                data-transition="slideup"
+                {{action deleteKey target="view"}}>Delete</a>
+
+            <a href=""
+                {{bindAttr class=":action-links view.disabledDefaultClass"}}
+                id="keys-button-associate"
+                data-role="button"
+                data-icon="gear"
+                data-rel="popup"
+                data-transition="slideup"
+                {{action setDefaultKey target="view"}}>Set default</a>
+        </div>
+    </div>

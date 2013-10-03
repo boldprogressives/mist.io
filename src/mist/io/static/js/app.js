@@ -71,6 +71,7 @@ define( 'app', [
     'app/views/key_priv_dialog',
     'app/views/rule',
     'app/views/user_menu',
+    'app/views/zone_list',
     'text!app/templates/machine.html',
     'cubism',
     'ember'
@@ -111,6 +112,7 @@ define( 'app', [
                 KeyPrivDialog,
                 RuleView,
                 UserMenuView,
+                ZoneListView,
                 machine_html,
                 cubism
                 ) {
@@ -161,6 +163,11 @@ define( 'app', [
             this.route('key', {
                 path : '/keys/:key_id'
             });
+            this.route('zones');
+            this.route('zone', {
+                path : '/zones/:zone_id'
+            });
+            
         });
 
         App.MachinesRoute = Ember.Route.extend({
@@ -231,6 +238,9 @@ define( 'app', [
         App.KeyPrivDialog = KeyPrivDialog;
         App.MachineAddView = MachineAddDialog;
         App.MachineManageKeys = MachineManageKeys;
+        App.KeyAssociateDialog = KeyAssociateDialog;
+        App.MachineKeyListItemView = MachineKeyListItem;
+        App.ZoneListView = ZoneListView;
         
         App.set('backendAddController', BackendAddController.create());
         App.set('backendsController', BackendsController.create());

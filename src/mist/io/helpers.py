@@ -19,6 +19,7 @@ from libcloud.compute.types import NodeState
 from libcloud.compute.providers import get_driver
 from libcloud.compute.base import Node
 from libcloud.compute.types import Provider
+from libcloud.dns.providers import get_driver as get_dns_driver
 
 from fabric.api import env
 from fabric.api import run
@@ -152,7 +153,6 @@ def get_keypair(keypairs, backend_id=None, machine_id=None):
 
     return {}
 
-
 def get_ssh_user_from_keypair(keypair, backend_id=None, machine_id=None):
     """get ssh user for key pair given the key pair"""
     machines = keypair.get('machines', [])
@@ -169,8 +169,7 @@ def get_ssh_user_from_keypair(keypair, backend_id=None, machine_id=None):
                 return ''
     return ''
 
-
-def connect(request, backend_id=False):
+def connect(request, backend_id=False, dns_driver=False):
     """Establishes backend connection using the credentials specified.
 
     It has been tested with:
@@ -190,7 +189,14 @@ def connect(request, backend_id=False):
         backend_id = request.matchdict['backend']
     backend = backends.get(backend_id)
 
-    driver = get_driver(backend['provider'])
+    # @@TODO this is ugly
+    if dns_driver:
+        provider = backend['provider']
+        if provider in EC2_PROVIDERS:
+            provider = 'route53'
+        driver = get_dns_driver(provider)
+    else:
+        driver = get_driver(backend['provider'])
 
     if backend['provider'] == Provider.OPENSTACK:
         conn = driver(backend['apikey'],
